@@ -1,0 +1,216 @@
+// Entradas
+const int A = 2;
+const int B = 3;
+const int C = 4;
+const int D = 5;
+const int E = 6;
+const int F = 7;
+const int G = 8;
+
+
+// Salidas7
+const int SalidaS0 =  9;      
+const int SalidaS1 =  10; 
+const int Acarreo0 = 11;
+const int Acarreo1 = 12;
+const int ledPin =  13;
+
+// Estados
+int EstadoA = 0;         
+int EstadoB = 0; 
+int EstadoC = 0; 
+int EstadoD = 0; 
+int EstadoE = 0; 
+int EstadoF = 0; 
+int EstadoG = 0;
+
+void setup() {
+  // initialize the LED pin as an output:
+  pinMode(SalidaS0, OUTPUT);
+  pinMode(SalidaS1, OUTPUT);
+  pinMode(Acarreo0, OUTPUT);
+  pinMode(Acarreo1, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(A, INPUT);
+  pinMode(B, INPUT);
+  pinMode(C, INPUT);
+  pinMode(D, INPUT);
+  pinMode(E, INPUT);
+  pinMode(F, INPUT);
+  pinMode(G, INPUT);
+}
+
+void loop() {
+  // Leer valor de entrada (botón)
+  EstadoA = digitalRead(A);
+  EstadoB = digitalRead(B);
+  EstadoC = digitalRead(C);
+  EstadoD = digitalRead(D);
+  EstadoE = digitalRead(E);
+  EstadoF = digitalRead(F);
+  EstadoG = digitalRead(G);
+
+  // AND
+  if ((EstadoA && EstadoC)&&(!EstadoE&&!EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if ((EstadoB && EstadoD)&&(!EstadoE&&!EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+  } else {
+    digitalWrite(SalidaS1, LOW);
+  }
+
+  // OR
+  if ((EstadoA || EstadoC)&&(!EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if ((EstadoB || EstadoD)&&(!EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+  } else {
+    digitalWrite(SalidaS1, LOW);
+  }
+
+  // XOR
+  if ((EstadoA^EstadoC)&&(EstadoE&&!EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if ((EstadoB^EstadoD)&&(EstadoE&&!EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+  } else {
+    digitalWrite(SalidaS1, LOW);
+  }
+
+  // NOT
+  if ((!EstadoA&&!EstadoC)&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if ((!EstadoB&&!EstadoD)&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+  } else {
+    digitalWrite(SalidaS1, LOW);
+  }
+
+  // SUMA
+  if ((EstadoA^EstadoC)&&(!EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if(((EstadoA&&EstadoC)^(EstadoB^EstadoD))&&(!EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(SalidaS1, LOW);
+    digitalWrite(ledPin, LOW);
+  }
+
+  
+  if((EstadoB&&EstadoD)&&(!EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(ledPin, LOW);
+  }
+
+  // RESTA
+  if ((EstadoA^EstadoC)&&(EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if(((!EstadoA&&EstadoC)^(EstadoB&&EstadoD))&&(EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(SalidaS1, LOW);
+    digitalWrite(ledPin, LOW);
+  }
+  if((!EstadoB&&EstadoD)&&(EstadoE&&!EstadoF&&EstadoG)){
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(ledPin, LOW);
+  }
+
+
+  // MULTIPLICACIÓN
+  if ((EstadoA&&EstadoC)&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if(((EstadoA&&EstadoD)^(EstadoB&&EstadoC))&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(SalidaS1, LOW);
+    digitalWrite(ledPin, LOW);
+  }
+  
+  if((((EstadoA&&EstadoD)&&(EstadoB&&EstadoC))^(EstadoB&&EstadoD))&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(Acarreo0, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(Acarreo0, LOW);
+  }
+  
+  if((((EstadoA&&EstadoD)&&(EstadoB&&EstadoC))&&(EstadoB&&EstadoD))&&(EstadoE&&EstadoF&&!EstadoG)){
+    digitalWrite(Acarreo1, HIGH);
+    digitalWrite(ledPin, HIGH);
+  }else{
+    digitalWrite(Acarreo1, LOW);
+    digitalWrite(ledPin, LOW);
+  }
+
+  // DIVISIÓN
+  if ((!EstadoA&&EstadoB&&EstadoC&&EstadoD)&&(EstadoE&&EstadoF&&EstadoG)){
+    digitalWrite(Acarreo1, HIGH);
+  } else {
+    digitalWrite(Acarreo1, LOW);
+  }
+    if ((EstadoA&&!EstadoB&&!EstadoC&&EstadoD)^(EstadoA&&!EstadoB&&EstadoC&&EstadoD)^(EstadoA&&EstadoB&&!EstadoC&&EstadoD)&&(EstadoE&&EstadoF&&EstadoG)){
+    digitalWrite(Acarreo0, HIGH);
+  } else {
+    digitalWrite(Acarreo0, LOW);
+  }
+  if ((!EstadoA&&EstadoB&&EstadoC&&!EstadoD)^(EstadoA&&EstadoB&&EstadoC&&!EstadoD)&&(EstadoE&&EstadoF&&EstadoG)){
+    digitalWrite(SalidaS1, HIGH);
+  } else {
+    digitalWrite(SalidaS1, LOW);
+  }
+  if ((!EstadoA&&EstadoB&&!EstadoC&&EstadoD)^(EstadoA&&!EstadoB&&EstadoC&&!EstadoD)^(EstadoA&&EstadoB&&!EstadoC&&EstadoD)^(EstadoA&&EstadoB&&EstadoC&&!EstadoD)^(EstadoA&&EstadoB&&EstadoC&&EstadoD)&&(EstadoE&&EstadoF&&EstadoG)){
+    digitalWrite(SalidaS0, HIGH);
+  } else {
+    digitalWrite(SalidaS0, LOW);
+  }
+  if((!EstadoD&&!EstadoC)&&(EstadoE&&EstadoF&&EstadoG)){
+    digitalWrite(Acarreo0, HIGH);
+    delay(50);
+    digitalWrite(Acarreo0, LOW);
+    delay(50);
+    digitalWrite(Acarreo1, HIGH);
+    delay(50);
+    digitalWrite(Acarreo1, LOW);
+    delay(50);
+    digitalWrite(SalidaS0, HIGH);
+    delay(50);
+    digitalWrite(SalidaS0, LOW);
+    delay(50);
+    digitalWrite(SalidaS1, HIGH);
+    delay(50);
+    digitalWrite(SalidaS1, LOW);
+    delay(50);
+  }else{
+    digitalWrite(Acarreo0, LOW);
+    digitalWrite(Acarreo1, LOW);
+    digitalWrite(SalidaS0, LOW);
+    digitalWrite(SalidaS1, LOW);
+  }
+}
